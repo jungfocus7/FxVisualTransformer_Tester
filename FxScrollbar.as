@@ -37,7 +37,7 @@
 			_owner = tow;
 			_grp = _owner.graphics;
 			_stage = _owner.stage;
-			//trace(ttp, tow, tsz, tfevt);			
+			//trace(ttp, tow, tsz, tfevt);
 			
 			_rctTrack = _owner.getBounds(_owner.parent)
 			//trace(_rctTrack);
@@ -49,25 +49,30 @@
 			_rctTrack.y = 0;
 			_rctScrollArea = _rctTrack.clone();
 			_rctThumb = _rctTrack.clone();
+			//trace('~~~1');
 			
 			_owner.scaleX = 1;
 			_owner.scaleY = 1;
 			_owner.removeChildren(0);
 			_owner.mouseChildren = false;
-			_owner.buttonMode = true;			
+			_owner.buttonMode = true;
+			//trace('~~~2');
 			
 			_scrollSizeRatio = tssr;
 			_positionRatio = tpr;
 			_enabled = _owner.mouseEnabled;
+			//trace('~~~3');
 			
 			_fevt = tfevt;
 			
 			
 			pf_UpdateRects();
 			pf_EnabledCheck();
+			//trace('~~~4');
 			
-			_owner.addEventListener(MouseEvent.MOUSE_DOWN, pf_MouseDown);			
-		}		
+			_owner.addEventListener(MouseEvent.MOUSE_DOWN, pf_MouseDown);
+			//trace('~~~5');
+		}
 		private var _type:String;
 		private var _owner:Sprite;
 		private var _fevt:Function;
@@ -95,7 +100,7 @@
 			ty = _rctTrack.y,
 			tw = _rctTrack.width,
 			th = _rctTrack.height;
-			_grp.beginFill(0x000000, 1);
+			_grp.beginFill(0xff6600, 1);
 			_grp.drawRect(tx, ty, tw, th);
 			_grp.endFill();
 			
