@@ -23,21 +23,21 @@ function pf_ImageSizeUpdate():void
 	var rctImg:Rectangle = _fxvt.GetBounds();
 	var tmx:Number;
 	var tmy:Number;
-	
-	
+
+
+
+
 	var tmh:Number = rctArea.height;
 	var tih:Number = rctImg.height;
 	var tssrh:Number = tmh / tih;
 	_fxsipv.GetScrollbar().SetScrollSizeRatio(tssrh);
-	
-	//pp_fxsi_ecb__v(null);
 	if (tssrh < 1)
-	{		
+	{
 		var tssh:Number = tih - tmh;
-		var tprh:Number = _fxsipv.GetScrollbar().GetPositionRatio();	
-		var tiy:Number = rctArea.left - (tssh * tprh);
+		var tprh:Number = _fxsipv.GetScrollbar().GetPositionRatio();
+		var tiy:Number = rctArea.top - (tssh * tprh);
 		//trace(tssh, tprh, tiy);
-		
+
 		_fxvt.MoveTop(tiy);
 		_fxvt.DrawBounds(_grp);
 	}
@@ -47,21 +47,19 @@ function pf_ImageSizeUpdate():void
 		_fxvt.MoveTopCenter(tmy);
 		_fxvt.DrawBounds(_grp);
 	}
-	
-	
+
+
 	var tmw:Number = rctArea.width;
 	var tiw:Number = rctImg.width;
 	var tssrw:Number = tmw / tiw;
 	_fxsiph.GetScrollbar().SetScrollSizeRatio(tssrw);
-	
-	//pp_fxsi_ecb__h(null);
 	if (tssrw < 1)
 	{
 		var tssw:Number = tiw - tmw;
-		var tprw:Number = _fxsiph.GetScrollbar().GetPositionRatio();	
-		var tix:Number = rctArea.top - (tssw * tprw);
+		var tprw:Number = _fxsiph.GetScrollbar().GetPositionRatio();
+		var tix:Number = rctArea.left - (tssw * tprw);
 		//trace(tssw, tprw, tix);
-		
+
 		_fxvt.MoveLeft(tix);
 		_fxvt.DrawBounds(_grp);
 	}
@@ -78,19 +76,19 @@ function pp_fxsi_ecb__v(te:Event = null):void
 {
 	var rctArea:Rectangle = _sprArea.getBounds(_owrt);
 	var rctImg:Rectangle = _fxvt.GetBounds();
-	
+
 	var tssrh:Number = _fxsipv.GetScrollbar().GetScrollSizeRatio();
 	//trace('tssrh:', tssrh);
 	if (tssrh < 1)
 	{
 		var tmh:Number = rctArea.height;
-		var tih:Number = rctImg.height;	
-		var tssh:Number = tih - tmh;		
+		var tih:Number = rctImg.height;
+		var tssh:Number = tih - tmh;
 		var tprh:Number = _fxsipv.GetScrollbar().GetPositionRatio();
 		//trace(tprh);
-		var tiy:Number = rctArea.left - (tssh * tprh);
+		var tiy:Number = rctArea.top - (tssh * tprh);
 		//trace(tiy);
-		
+
 		_fxvt.MoveTop(tiy);
 		_fxvt.DrawBounds(_grp);
 	}
@@ -101,19 +99,19 @@ function pp_fxsi_ecb__h(te:Event = null):void
 {
 	var rctArea:Rectangle = _sprArea.getBounds(_owrt);
 	var rctImg:Rectangle = _fxvt.GetBounds();
-	
+
 	var tssrw:Number = _fxsiph.GetScrollbar().GetScrollSizeRatio();
 	//trace('tssrw:', tssrw);
 	if (tssrw < 1)
 	{
 		var tmw:Number = rctArea.width;
-		var tiw:Number = rctImg.width;	
+		var tiw:Number = rctImg.width;
 		var tssw:Number = tiw - tmw;
 		var tprw:Number = _fxsiph.GetScrollbar().GetPositionRatio();
 		//trace(tprw);
-		var tix:Number = rctArea.top - (tssw * tprw);
+		var tix:Number = rctArea.left - (tssw * tprw);
 		//trace(tix);
-		
+
 		_fxvt.MoveLeft(tix);
 		_fxvt.DrawBounds(_grp);
 	}
@@ -127,23 +125,8 @@ function pf__fxsbScale_Update():void
 	//trace(ts);
 	_fxvt.SetScaleCenter(ts, ts);
 	_fxvt.DrawBounds(_grp);
-	
+
 	pf_ImageSizeUpdate();
-	/*
-	var ts:Number = _fxsipScale.GetVal();
-	//trace(ts);
-	//_fxvt.SetScaleCenter(ts, ts);
-	
-	var rctArea:Rectangle = _sprArea.getBounds(_owrt);
-	var tcx:Number = FxGeometry.GetLeftCenter(rctArea);
-	var tcy:Number = FxGeometry.GetTopCenter(rctArea);
-	_fxvt.MoveCenter(tcx, tcy);
-	_fxvt.SetScaleCenter(ts, ts);
-	//_fxvt.SetScaleAt(tcx, tcy, ts, ts);
-	_fxvt.DrawBounds(_grp);
-	
-	pf_ImageSizeUpdate();
-	*/
 }
 
 function pf__fxsbRotation_Update():void
@@ -152,7 +135,7 @@ function pf__fxsbRotation_Update():void
 	//trace(trd);
 	_fxvt.SetRotateCenter(trd);
 	_fxvt.DrawBounds(_grp);
-	
+
 	pf_ImageSizeUpdate();
 }
 
@@ -161,13 +144,13 @@ function pf__stage_resize(te:Event):void
 {
 	var tsw:Number = _stage.stageWidth;
 	var tsh:Number = _stage.stageHeight;
-	
+
 	_rctArea.width = tsw - 40;
 	_rctArea.height = tsh - 140;
-	
+
 	_sprBorder.width = _rctArea.width;
 	_sprBorder.height = _rctArea.height;
-	
+
 	var ttw:Number = _rctArea.width - 20;
 	var tth:Number = _rctArea.height - 20;
 	var ttx:Number = 10;
@@ -176,29 +159,29 @@ function pf__stage_resize(te:Event):void
 	_sprArea.height = tth;
 	_sprArea.x = ttx;
 	_sprArea.y = tty;
-	
+
 	_sprMask.width = ttw;
 	_sprMask.height = tth;
 	_sprMask.x = ttx;
 	_sprMask.y = tty;
-	
-	
+
+
 	_fxsipv.GetCont().x = _rctArea.right;
 	_fxsipv.GetScrollbar().SetSize(_rctArea.height);
 	_fxsipv.SetTextBoxPos(NaN, tsh - 30);
-	
+
 	_fxsiph.GetCont().y = _rctArea.height;
 	_fxsiph.GetScrollbar().SetSize(_rctArea.width);
 	_fxsiph.SetTextBoxPos(tsw - 142, NaN);
-	
-	
+
+
 	tty = _rctArea.height + 80;
 	_fxsipScale.GetCont().y = tty;
-	
+
 	tty = _rctArea.height + 110;
-	_fxsipRotation.GetCont().y = tty;	
-	
-	
+	_fxsipRotation.GetCont().y = tty;
+
+
 	pf_ImageSizeUpdate();
 }
 
@@ -207,32 +190,32 @@ function pf_InitOnce():void
 {
 	_sprArea = _owrt['mvcArea'];
 	_sprArea.mouseChildren = false;
-	_sprArea.mouseEnabled = false;
+	//_sprArea.mouseEnabled = false;
 	_sprArea.buttonMode = true;
-	
+
 	_sprMask = _owrt['mvcMask'];
 	_sprMask.mouseChildren = false;
 	_sprMask.mouseEnabled = false;
-	
+
 	_sprImg = _owrt['mvcImage'];
 	_sprImg.mouseChildren = false;
 	_sprImg.mouseEnabled = false;
-	
+
 	_sprGrpCont = _owrt['mvcGrpCont'];
 	_grp = _sprGrpCont.graphics;
 	_sprGrpCont.mouseChildren = false;
 	_sprGrpCont.mouseEnabled = false;
-	
+
 	_sprBorder = _owrt['mvcBorder'];
 	_sprBorder.mouseChildren = false;
 	_sprBorder.mouseEnabled = false;
-	
-	
-	
+
+
+
 	_fxvt = new FxVisualTransformer(_sprImg);
-	_fxvt.DrawBounds(_grp);	
-	
-	
+	_fxvt.DrawBounds(_grp);
+
+
 	_fxsipScale = new FxScrollInput(_owrt['mvc_fxsipScale'], FxScrollbar.TYPE_HORIZONTAL,
 						'mvc_fxsb', 'txb',
 						300, 0.1, 0.0,
@@ -246,7 +229,7 @@ function pf_InitOnce():void
 						0.0, FxGeometry.FullRadian, 0.0,
 						0.1, 10.0, 0.01, 1.0,
 						2, pf__fxsbRotation_Update);
-						
+
 
 	_fxsipv = new FxScrollInput(_owrt['mvc_fxsipv'], FxScrollbar.TYPE_VERTICAL,
 						'mvc_fxsb', 'txb',
@@ -261,46 +244,56 @@ function pf_InitOnce():void
 						0.0, 1.0, 0.5,
 						0.01, 1.0, 0.001, 0.1,
 						2, pp_fxsi_ecb__h);
-						
-						
-						
-						
-	_sprArea.addEventListener(MouseEvent.CLICK,
-		function(te:MouseEvent):void {
-			/*
-			var tmx:Number = _owrt.mouseX;
-			var tmy:Number = _owrt.mouseY;
-			
-			//_fxvt.MoveLeft(tmx);		
-			//_fxvt.MoveTop(tmy);
-			//_fxvt.MoveLeftTop(tmx, tmy);
-			
-			//_fxvt.MoveRight(tmx);		
-			//_fxvt.MoveBottom(tmy);
-			//_fxvt.MoveRightBottom(tmx, tmy);
-			
-			//_fxvt.MoveLeftCenter(tmx);
-			//_fxvt.MoveTopCenter(tmy);
-			_fxvt.MoveCenter(tmx, tmy);
-			
-			
-			_fxvt.DrawBounds(_grp);
-			*/
-		});
-		
-	_sprArea.addEventListener(MouseEvent.MOUSE_WHEEL,
-		function(te:MouseEvent):void {
-		});
-		
-		
-	
+
+
+
 	_stage = _owrt.stage;
 	_stage.scaleMode = StageScaleMode.NO_SCALE;
 	_stage.align = StageAlign.TOP_LEFT;
 	_stage.addEventListener(Event.RESIZE, pf__stage_resize);
 	_rctArea = new Rectangle(0, 0, 0, 0);
-	trace(_rctArea);
+
 	pf__stage_resize(null);
+
+
+
+
+	_sprArea.addEventListener(MouseEvent.CLICK,
+		function(te:MouseEvent):void {
+			//var tmx:Number = _owrt.mouseX;
+			//var tmy:Number = _owrt.mouseY;
+
+			//_fxvt.MoveLeft(tmx);
+			//_fxvt.MoveTop(tmy);
+			//_fxvt.MoveLeftTop(tmx, tmy);
+
+			//_fxvt.MoveRight(tmx);
+			//_fxvt.MoveBottom(tmy);
+			//_fxvt.MoveRightBottom(tmx, tmy);
+
+			//_fxvt.MoveLeftCenter(tmx);
+			//_fxvt.MoveTopCenter(tmy);
+			//_fxvt.MoveCenter(tmx, tmy);
+
+			//_fxvt.DrawBounds(_grp);
+		});
+
+
+	_sprArea.addEventListener(MouseEvent.MOUSE_WHEEL,
+		function(te:MouseEvent):void {			
+			_fxsipScale.CallMouseWheelHandler(te);
+			
+			/*
+			if (te.ctrlKey)
+			{
+				_fxsipScale.CallMouseWheelHandler(te);
+			}
+			else
+			{
+				_fxsipRotation.CallMouseWheelHandler(te);
+			}*/
+		});
+		
 }
 
 
@@ -331,7 +324,7 @@ var _fxsiph:FxScrollInput;
 
 
 pf_InitOnce();
-											 
+
 
 
 
