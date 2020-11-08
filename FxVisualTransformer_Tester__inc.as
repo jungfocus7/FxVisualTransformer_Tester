@@ -7,9 +7,8 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.geom.Point;
 import flash.geom.Rectangle;
-
-
 
 
 
@@ -280,17 +279,58 @@ function pf_InitOnce():void
 
 
 	_sprArea.addEventListener(MouseEvent.MOUSE_WHEEL,
-		function(te:MouseEvent):void {			
-			_fxsipScale.CallMouseWheelHandler(te);
-			
-			/*
-			if (te.ctrlKey)
+		function(te:MouseEvent):void {
+			if (te.altKey)
 			{
-				_fxsipScale.CallMouseWheelHandler(te);
+				_fxsipRotation.CallMouseWheelHandler(te);
 			}
 			else
 			{
-				_fxsipRotation.CallMouseWheelHandler(te);
+				_fxsipScale.CallMouseWheelHandler(te);
+			}
+		});
+
+
+	_sprArea.addEventListener(MouseEvent.MOUSE_MOVE,
+		function(te:MouseEvent):void {
+			/*
+			//trace(_owrt.mouseX, _owrt.mouseY);
+			var tmx:Number = _owrt.mouseX;
+			var tmy:Number = _owrt.mouseY;
+			
+			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctImg:Rectangle = _fxvt.GetBounds();
+			
+			//_fxvt.MoveCenter(tmx, tmy);
+			
+			trace();
+			*/
+			/*
+			var tmx:Number = _owrt.mouseX;
+			var tmy:Number = _owrt.mouseY;
+			
+			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctImg:Rectangle = _fxvt.GetBounds();
+			
+			var tmh:Number = rctArea.height;
+			var tih:Number = rctImg.height;
+			var tssrh:Number = tmh / tih;
+			_fxsipv.GetScrollbar().SetScrollSizeRatio(tssrh);
+			if (tssrh < 1)
+			{
+				var tssh:Number = tih - tmh;
+				var tprh:Number = _fxsipv.GetScrollbar().GetPositionRatio();
+				var tiy:Number = rctArea.top - (tssh * tprh);
+				//trace(tssh, tprh, tiy);
+		
+				_fxvt.MoveTop(tiy);
+				_fxvt.DrawBounds(_grp);
+			}
+			else
+			{
+				tmy = FxGeometry.GetTopCenter(rctArea);
+				_fxvt.MoveTopCenter(tmy);
+				_fxvt.DrawBounds(_grp);
 			}*/
 		});
 		
