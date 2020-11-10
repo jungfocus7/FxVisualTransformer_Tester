@@ -1,8 +1,10 @@
 ﻿package
 {	
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	
 
 
 	public class RxVisualTransformer
@@ -145,6 +147,7 @@
             var ttx:Number = tv - RxGeom.GetLeft(_rct);
             var tty:Number = 0;
             _mtr.translate(ttx, tty);
+			pf_ApplyMatrix();
         }
 
         public function MoveTop(tv:Number):void
@@ -152,6 +155,7 @@
             var ttx:Number = 0;
             var tty:Number = tv - RxGeom.GetTop(_rct);
             _mtr.translate(ttx, tty);
+			pf_ApplyMatrix();
         }		
 		
         //~~~~~~~~~~
@@ -160,6 +164,7 @@
             var ttx:Number = tv - RxGeom.GetLeftCenter(_rct);
             var tty:Number = 0;
             _mtr.translate(ttx, tty);
+			pf_ApplyMatrix();
         }
 
         public function MoveTopCenter(tv:Number):void
@@ -167,7 +172,22 @@
             var ttx:Number = 0;
             var tty:Number = tv - RxGeom.GetTopCenter(_rct);
             _mtr.translate(ttx, tty);
-        }		
+			pf_ApplyMatrix();
+        }
+		
+		
+        public function DrawBorders(tgrp:Graphics):void
+        {
+            tgrp.clear();
+            tgrp.lineStyle(5, 0xff0000, 0.35);
+            tgrp.beginFill(0x00ff00, 0.15);
+            tgrp.drawRect(_rct.x, _rct.y, _rct.width, _rct.height);
+            tgrp.moveTo(_rct.left, _rct.top);
+            tgrp.lineTo(_rct.right, _rct.bottom);
+            tgrp.moveTo(_rct.left, _rct.bottom);
+            tgrp.lineTo(_rct.right, _rct.top);
+        }
+		
 	}
 
 }
