@@ -8,6 +8,9 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.geom.Point;
+	import flash.geom.Matrix;
+	import flash.ui.Keyboard;
 	
 	
 
@@ -23,7 +26,7 @@
 			_stg.scaleMode = StageScaleMode.NO_SCALE;
 			_stg.align = StageAlign.TOP_LEFT;
 			_stg.addEventListener(Event.RESIZE, pf_stage__resize);
-			_rctArea = new Rectangle(0, 0, 0, 0);
+			_rctBounds = new Rectangle(0, 0, 0, 0);
 			
 			_sprArea = _owrt['mvcArea'];
 			_sprArea.mouseChildren = false;
@@ -57,15 +60,15 @@
 								_owrt['mvc_rxsipScale'], RxScrollbar.TYPE_HORIZONTAL, 'mvc_rxsb', 'txb',
 								300, 0.1, 0.0,
 								0.3, 5.0, 1.0,
-								0.01, 10.0, 0.1, 1.0,
-								2, pf_rxsbScale__Update);
+								0.01, 10.0, 0.001, 0.1,
+								3, pf_rxsbScale__Update);
 
 			_rxsipRotate = new RxScrollInput(
 								_owrt['mvc_rxsipRotate'], RxScrollbar.TYPE_HORIZONTAL, 'mvc_rxsb', 'txb',
 								300, 0.1, 0.0,
 								0.0, RxGeom.FullAngle, 0.0,
-								1.0, 100.0, 0.1, 10.0,
-								2, pf_rxsipRotate__Update);
+								1.0, 100.0, 0.1, 10.0,//(Normal),(Ctrl+Shift),(Ctrl),(Shift)
+								3, pf_rxsipRotate__Update);
 
 
 			_rxsipVert = new RxScrollInput(
@@ -97,9 +100,10 @@
 		}
 		private var _owrt:RxVisualTransformer_Tester;
 		private var _stg:Stage;
-		private var _rctArea:Rectangle;
+		private var _rctBounds:Rectangle;
 		
 		private var _sprArea:Sprite;
+		private var _rctArea:Rectangle;
 		private var _sprMask:Sprite;
 		private var _sprImg:Sprite;
 		
@@ -109,7 +113,7 @@
 		private var _sprBorder:Sprite;
 		
 		
-		private var _rxvt:RxVisualTransformer;		
+		private var _rxvt:RxVisualTransformer;
 		
 		private var _rxsipScale:RxScrollInput;
 		private var _rxsipRotate:RxScrollInput;
@@ -124,20 +128,21 @@
 			var tsw:Number = _stg.stageWidth;
 			var tsh:Number = _stg.stageHeight;
 		
-			_rctArea.width = tsw - 40;
-			_rctArea.height = tsh - 140;
+			_rctBounds.width = tsw - 40;
+			_rctBounds.height = tsh - 140;
 
-			_sprBorder.width = _rctArea.width;
-			_sprBorder.height = _rctArea.height;
+			_sprBorder.width = _rctBounds.width;
+			_sprBorder.height = _rctBounds.height;
 
-			var ttw:Number = _rctArea.width - 20;
-			var tth:Number = _rctArea.height - 20;
+			var ttw:Number = _rctBounds.width - 20;
+			var tth:Number = _rctBounds.height - 20;
 			var ttx:Number = 10;
 			var tty:Number = 10;
 			_sprArea.width = ttw;
 			_sprArea.height = tth;
 			_sprArea.x = ttx;
 			_sprArea.y = tty;
+			_rctArea = _sprArea.getBounds(_owrt);
 
 			_sprMask.width = ttw;
 			_sprMask.height = tth;
@@ -145,20 +150,20 @@
 			_sprMask.y = tty;
 
 
-			_rxsipVert.GetCont().x = _rctArea.right;
-			_rxsipVert.GetScrollbar().SetSize(_rctArea.height);
+			_rxsipVert.GetCont().x = _rctBounds.right;
+			_rxsipVert.GetScrollbar().SetSize(_rctBounds.height);
 			_rxsipVert.SetTextBoxPos(NaN, tsh - 30);
 		
-			_rxsipHori.GetCont().y = _rctArea.height;
-			_rxsipHori.GetScrollbar().SetSize(_rctArea.width);
+			_rxsipHori.GetCont().y = _rctBounds.height;
+			_rxsipHori.GetScrollbar().SetSize(_rctBounds.width);
 			_rxsipHori.SetTextBoxPos(tsw - 142, NaN);
 
 
 
-			tty = _rctArea.height + 80;
+			tty = _rctBounds.height + 80;
 			_rxsipScale.GetCont().y = tty;
 		
-			tty = _rctArea.height + 110;
+			tty = _rctBounds.height + 110;
 			_rxsipRotate.GetCont().y = tty;
 		
 		
@@ -168,7 +173,7 @@
 		
 		private function pf_ImageHeightUpdate():void
 		{
-			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctArea:Rectangle = _rctArea;
 			var rctImg:Rectangle = _rxvt.GetRect();
 		
 			var tmh:Number = rctArea.height;
@@ -195,7 +200,7 @@
 		
 		private function pf_ImageWidthUpdate():void
 		{
-			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctArea:Rectangle = _rctArea;
 			var rctImg:Rectangle = _rxvt.GetRect();
 			
 			var tmw:Number = rctArea.width;
@@ -245,7 +250,7 @@
 		
 		private function pf_rxsiVert__cbf():void
 		{
-			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctArea:Rectangle = _rctArea;
 			var rctImg:Rectangle = _rxvt.GetRect();
 		
 			var tssrh:Number = _rxsipVert.GetScrollbar().GetScrollSizeRatio();
@@ -264,7 +269,7 @@
 		
 		private function pf_rxsipHori__cbf():void
 		{
-			var rctArea:Rectangle = _sprArea.getBounds(_owrt);
+			var rctArea:Rectangle = _rctArea;
 			var rctImg:Rectangle = _rxvt.GetRect();
 		
 			var tssrw:Number = _rxsipHori.GetScrollbar().GetScrollSizeRatio();
@@ -282,6 +287,37 @@
 		}
 		
 		
+		private function pf_scrollSetFx__Vert():void
+		{
+			var tmh:Number = RxGeom.GetHeight(_rctArea);
+			var tih:Number = _rxvt.GetHeight();
+			var tssh:Number = tih - tmh;
+			if (tssh > 0)
+			{
+				var tiy:Number = RxGeom.GetTop(_rctArea) - _rxvt.GetTop();
+				var tpr:Number = tiy / tssh;
+				//trace(tiy, tssh, tiy / tssh);
+				//_rxsipVert.GetScrollbar().SetPositionRatio(tpr);
+				_rxsipVert.SetVal(tpr);
+			}
+		}		
+		
+		private function pf_scrollSetFx__Hori():void
+		{
+			var tmw:Number = RxGeom.GetWidth(_rctArea);
+			var tiw:Number = _rxvt.GetWidth();
+			var tssw:Number = tiw - tmw;
+			if (tssw > 0)
+			{
+				var tix:Number = RxGeom.GetLeft(_rctArea) - _rxvt.GetLeft();
+				var tpr:Number = tix / tssw;
+				//trace(tix, tssw, tix / tssw);
+				//_rxsipHori.GetScrollbar().SetPositionRatio(tpr);
+				_rxsipHori.SetVal(tpr);
+			}
+		}
+		
+		
 		private function pf_sprArea__mouseWheel(te:MouseEvent):void
 		{
 			if (te.altKey)
@@ -294,10 +330,86 @@
 			}
 		}
 		
-		private function pf_sprArea__mouseDown(te:MouseEvent):void
+		
+		
+		private function pf_sprArea__mouseUp(te:MouseEvent):void
 		{
-			var tyr:Number = 0.7;
-			_rxsipVert.GetScrollbar().SetPositionRatio(tyr);
+			if (_mdpt == null) return;
+			
+			_stg.removeEventListener(MouseEvent.MOUSE_UP, pf_sprArea__mouseUp);
+			_stg.removeEventListener(MouseEvent.MOUSE_MOVE, pf_sprArea__mouseMove);
+			_mdpt = null;
+		}
+		
+		private function pf_sprArea__mouseMove(te:MouseEvent):void
+		{
+			if (_mdpt == null) return;
+			
+			var tx_gl:Number = RxGeom.GetLeft(_rctArea) + (_rxvt.GetLeftCenter() - _rxvt.GetLeft());
+			var tx_gr:Number = RxGeom.GetRight(_rctArea) - (_rxvt.GetRight() - _rxvt.GetLeftCenter());
+			var tx_gt:Number = RxGeom.GetTop(_rctArea) + (_rxvt.GetTopCenter() - _rxvt.GetTop());
+			var tx_gb:Number = RxGeom.GetBottom(_rctArea) - (_rxvt.GetBottom() - _rxvt.GetTopCenter());
+			//trace(tx_gl, tx_gr, tx_gt, tx_gb);
+			
+			var tx_d:Number = RxGeom.GetWidth(_rctArea) - _rxvt.GetWidth();
+			var ty_d:Number = RxGeom.GetHeight(_rctArea) - _rxvt.GetHeight();
+			//trace(tx_d, ty_d);
+			
+			var tmx:Number = _owrt.mouseX - _mdpt.x;
+			var tmy:Number = _owrt.mouseY - _mdpt.y;
+			//trace(tmx, tmy);
+			
+			
+			if (tx_d < 0)
+			{
+				if (tmx > tx_gl)
+					tmx = tx_gl;
+				else if (tmx < tx_gr)
+					tmx = tx_gr;
+			}
+			else
+			{
+				tmx = RxGeom.GetRight(_rctArea) - RxGeom.GetHalfWidth(_rctArea);
+			}
+			
+				
+			if (ty_d < 0)
+			{
+				if (tmy > tx_gt)
+					tmy = tx_gt;
+				else if (tmy < tx_gb)
+					tmy = tx_gb;
+			}
+			else
+			{
+				tmy = RxGeom.GetBottom(_rctArea) - RxGeom.GetHalfHeight(_rctArea);
+			}
+			
+			
+			//trace(tmx, tmy);
+			//_rxvt.MoveAt(tmx, tmy);
+			_rxvt.MoveCenter(tmx, tmy);
+			_rxvt.DrawBorders(_grp);
+			
+			
+			pf_scrollSetFx__Vert();
+			pf_scrollSetFx__Hori();
+			
+			
+			if (te !== null)
+				te.updateAfterEvent();
+		}
+		
+		private var _mdpt:Point;
+		private function pf_sprArea__mouseDown(te:MouseEvent):void
+		{			
+			var ttx:Number = _owrt.mouseX - _rxvt.GetLeftCenter();
+			var tty:Number = _owrt.mouseY - _rxvt.GetTopCenter();
+			_mdpt = new Point(ttx, tty);
+			
+			_stg.addEventListener(MouseEvent.MOUSE_UP, pf_sprArea__mouseUp);
+			_stg.addEventListener(MouseEvent.MOUSE_MOVE, pf_sprArea__mouseMove);
+			pf_sprArea__mouseMove(null);			
 		}
 		
 	}

@@ -73,6 +73,15 @@
         {
             return _rxdbaff.GetValue();
         }
+        public function SetVal(tv:Number):void
+        {
+			_rxdbaff.SetValue(tv);
+
+            var tpr:Number = _rxdbaff.GetRatio();
+            _rxsb.SetPositionRatio(tpr);
+
+            _txb.text = _rxdbaff.GetValueFixed();
+        }
 
 
         private var _cbf:Function;

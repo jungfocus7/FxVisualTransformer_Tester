@@ -13,7 +13,7 @@
 		{
 			_tdo = tdo;
 			_mtr = _tdo.transform.matrix;
-			_rct = _tdo.getBounds(_tdo.parent);
+			pf_ApplyMatrix(false);
 
 		}
 		private var _tdo:DisplayObject;
@@ -58,11 +58,73 @@
 			return _rct;
 		}
 		
+        public function GetWidth():Number
+        {
+            return RxGeom.GetWidth(_rct);
+        }
+        public function GetHeight():Number
+        {
+            return RxGeom.GetHeight(_rct);
+        }
 		
-		private function pf_ApplyMatrix():void
+		
+		
+        public function GetHalfWidth():Number
+        {
+            return RxGeom.GetHalfWidth(_rct);
+        }
+        public function GetHalfHeight():Number
+        {
+            return RxGeom.GetHalfHeight(_rct);
+        }
+		
+		
+		
+        public function GetLeft():Number
+        {
+            return RxGeom.GetLeft(_rct);
+        }		
+        public function GetTop():Number
+        {
+            return RxGeom.GetTop(_rct);
+        }
+        public function GetRight():Number
+        {
+            return RxGeom.GetRight(_rct);
+        }
+        public function GetBottom():Number
+        {
+            return RxGeom.GetBottom(_rct);
+        }
+		
+		
+		
+        public function GetLeftCenter():Number
+        {
+            return RxGeom.GetLeftCenter(_rct);
+        }
+        public function GetTopCenter():Number
+        {
+            return RxGeom.GetTopCenter(_rct);
+        }
+		
+		
+
+        public function GetTX():Number
+        {
+            return RxGeom.GetTX(_mtr);
+        }
+        public function GetTY():Number
+        {
+            return RxGeom.GetTY(_mtr);
+        }
+		
+		
+		private function pf_ApplyMatrix(tbx:Boolean = true):void
 		{
-			_tdo.transform.matrix = _mtr;
+			if (tbx) _tdo.transform.matrix = _mtr;
 			_rct = _tdo.getBounds(_tdo.parent);
+			_rct.inflate(40, 40);
 		}
 		
 		private function pf_CheckRadian(trd:Number):Number
@@ -79,8 +141,7 @@
 		{
 			var tyrd:Number = RxGeom.GetRadian1(_mtr);
 			var tnrd:Number = pf_CheckRadian(trd);
-			//var tnrd:Number = RxGeom.DoubleRound(RxGeom.FullRadianHalf) - RxGeom.DoubleRound(trd);
-			//trace(tyrd, tnrd/*, RxGeom.DoubleRound(RxGeom.FullRadian)*/);
+			//trace(tyrd, tnrd);
 			if (tnrd !== tyrd)
 			{
 				var tcx:Number = RxGeom.GetLeftCenter(_rct);
@@ -93,11 +154,6 @@
 				_mtr.translate(tcx, tcy);
 				
 				pf_ApplyMatrix();
-				//trace('적용');
-			}
-			else
-			{
-				trace('같음');
 			}
 		}
 		
@@ -131,11 +187,6 @@
 				_mtr.translate(tcx, tcy);
 				
 				pf_ApplyMatrix();
-				//trace('적용');
-			}
-			else
-			{
-				trace('같음');
 			}
 		}		
 		
@@ -156,7 +207,7 @@
             var tty:Number = tv - RxGeom.GetTop(_rct);
             _mtr.translate(ttx, tty);
 			pf_ApplyMatrix();
-        }		
+        }
 		
         //~~~~~~~~~~
         public function MoveLeftCenter(tv:Number):void
@@ -175,6 +226,25 @@
 			pf_ApplyMatrix();
         }
 		
+        //~~~~~~~~~~
+        public function MoveCenter(tx:Number, ty:Number):void
+        {
+            var ttx:Number = tx - RxGeom.GetLeftCenter(_rct);
+            var tty:Number = ty - RxGeom.GetTopCenter(_rct);
+            _mtr.translate(ttx, tty);
+			pf_ApplyMatrix();
+        }
+		
+		//~~~~~~~~~~
+		public function MoveAt(tmx:Number, tmy:Number):void
+		{			
+			_mtr.translate(-_mtr.tx, -_mtr.ty);
+			_mtr.translate(tmx, tmy);
+			pf_ApplyMatrix();
+		}
+		
+		
+		
 		
         public function DrawBorders(tgrp:Graphics):void
         {
@@ -187,6 +257,7 @@
             tgrp.moveTo(_rct.left, _rct.bottom);
             tgrp.lineTo(_rct.right, _rct.top);
         }
+		
 		
 	}
 

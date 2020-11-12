@@ -57,6 +57,12 @@
             return DoubleRound(tv);
         }
 		
+        public static function GetAngle(tdo:DisplayObject):Number
+        {
+            return DoubleRound(tdo.rotation);
+        }		
+		
+		
 		
 		
         public static function GetRadian1(tmtr:Matrix):Number
@@ -81,45 +87,66 @@
             return DoubleRound(tsy);
         }
 		
-        public static function GetX(tmtr:Matrix):Number
+        public static function GetTX(tmtr:Matrix):Number
         {
             return DoubleRound(tmtr.tx);
-        }
-		
-        public static function GetY(tmtr:Matrix):Number
+        }		
+        public static function GetTY(tmtr:Matrix):Number
         {
             return DoubleRound(tmtr.ty);
         }
 		
-		
-		
-        public static function GetAngle(tdo:DisplayObject):Number
-        {
-            return DoubleRound(tdo.rotation);
-        }
-		
+
 
 
         public static function GetLeft(trct:Rectangle):Number
         {
             return DoubleRound(trct.left);
         }
-
         public static function GetTop(trct:Rectangle):Number
         {
             return DoubleRound(trct.top);
+        }		
+        public static function GetRight(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.right);
         }
+        public static function GetBottom(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.bottom);
+        }
+		
+		
 
         public static function GetLeftCenter(trct:Rectangle):Number
         {
             var tcx:Number = trct.left + (trct.width / 2);
             return DoubleRound(tcx);
         }
-
         public static function GetTopCenter(trct:Rectangle):Number
         {
             var tcy:Number = trct.top + (trct.height / 2);
             return DoubleRound(tcy);
+        }
+		
+		
+		
+        public static function GetWidth(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.width);
+        }
+        public static function GetHeight(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.height);
+        }
+		
+        public static function GetHalfWidth(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.width / 2);
+        }
+        public static function GetHalfHeight(trct:Rectangle):Number
+        {
+            return DoubleRound(trct.height / 2);
         }
 		
 	}
